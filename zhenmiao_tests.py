@@ -29,11 +29,11 @@ class zhenmiaoTestCase(unittest.TestCase):
         return self.app.get('/logout', follow_redirects=True)
 
     def test_login_logout(self):
-        rv = self.login('admin', 'default')
+        rv = self.login('admin', '1234')
         assert 'You were logged in' in rv.data
         rv = self.logout()
         assert 'You were logged out' in rv.data
-        rv = self.login('adminx', 'default')
+        rv = self.login('adminx', '1234')
         assert 'Invalid username' in rv.data
         rv = self.login('admin', 'defaultx')
         assert 'Invalid password' in rv.data
