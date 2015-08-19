@@ -6,6 +6,8 @@ from flask import render_template, abort, redirect, url_for, make_response, \
 from contextlib import closing
 from forms import LoginForm
 from main import app
+from database import db_session
+from models import User
 
 def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
@@ -29,6 +31,11 @@ def teardown_request(exception):
     if db is not None:
         db.close()
     g.db.close()
+
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db_session.remove()
 
 
 @app.errorhandler(404)
