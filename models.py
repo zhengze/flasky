@@ -1,8 +1,8 @@
-from sqlalchemy import Table, column, Integer, String
+from sqlalchemy import Table, Column, Integer, String
 from sqlalchemy.orm import mapper
-from database import metadata, db_session, Base
+from database import db_session, Base
 
-class User(object):
+class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     name = Column(String(50), unique=True)
