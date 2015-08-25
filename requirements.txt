@@ -2,3 +2,4 @@ wtforms
 SQLAlchemy
 Flask-Login
 SQLAlchemy-migrate
+flask-wtf
