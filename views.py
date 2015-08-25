@@ -10,44 +10,11 @@ from main import app
 from database import db_session
 from models import Entries
 
-login_manager = LoginManager()
-login_manager.setup_app(app)
-
-def connect_db():
-    return sqlite3.connect(app.config['DATABASE'])
-
-
-def init_db():
-    with closing(connect_db()) as db:
-        with app.open_resource('schema.sql', mode='r') as f:
-            db.cursor().executescript(f.read())
-        db.commit()
-
-
-@app.before_request
-def before_request():
-    g.db = connect_db()
-
-
-@app.teardown_request
-def teardown_request(exception):
-    db = getattr(g, 'db', None)
-    if db is not None:
-        db.close()
-    g.db.close()
-
-
-@app.teardown_appcontext
-def shutdown_session(exception=None):
-    db_session.remove()
-
-@app.before_request
-def before_request():
-    g.user = current_user
-
-@login_manager.user_loader
-def load_user(userid):
-    return User.get(userid)
+#def init_db():
+#    with closing(connect_db()) as db:
+#        with app.open_resource('schema.sql', mode='r') as f:
+#            db.cursor().executescript(f.read())
+#        db.commit()
 
 @app.errorhandler(404)
 def page_not_found(error):
