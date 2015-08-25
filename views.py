@@ -4,7 +4,7 @@ import sqlite3
 from flask import render_template, abort, redirect, url_for, make_response, \
     g, request, session, flash
 from contextlib import closing
-from flask.ext.login import LoginManager, login_user, logout_user, current_user
+from flask.ext.login import LoginManager, login_user, logout_user, login_required, current_user
 from forms import LoginForm, EntryForm
 from main import app
 from database import db_session
@@ -36,10 +36,10 @@ def show_entries():
     return render_template('show_entries.html', entries=entries, form=form)
 
 @app.route('/add', methods=['POST'])
+@login_required
 def add_entry():
-    #if not session.get('logged_in'):
-    if not g.user.is_authenticated():
-        abort(401)
+    #if not g.user.is_authenticated():
+    #    abort(401)
     g.db.execute('insert into entries (title, text) values (?, ?)',
                 [request.form['title'], request.form['text']])
     g.db.commit()
@@ -56,7 +56,6 @@ def login():
         if form.validate():
             username = form.username.data
             password = form.password.data
-            #session['logged_in'] = True
             g.user = current_user
             user = User.query.filter_by(username=username).first()
             login_user(user)
@@ -70,7 +69,6 @@ def login():
 
 @app.route('/logout')
 def logout():
-    #session.pop('logged_in', None)
     logout_user()
     flash('You were logged out')
     return redirect(url_for('show_entries'))
