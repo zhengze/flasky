@@ -1,3 +1,4 @@
 wtforms
 SQLAlchemy
 Flask-Login
+SQLAlchemy-migrate
