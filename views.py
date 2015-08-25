@@ -4,17 +4,21 @@ import sqlite3
 from flask import render_template, abort, redirect, url_for, make_response, \
     g, request, session, flash
 from contextlib import closing
-from flask.ext.login import LoginManager, logout_user, current_user
-from forms import LoginForm
+from flask.ext.login import LoginManager, login_user, logout_user, current_user
+from forms import LoginForm, EntryForm
 from main import app
 from database import db_session
-from models import Entries
+from models import User, Entries
 
 #def init_db():
 #    with closing(connect_db()) as db:
 #        with app.open_resource('schema.sql', mode='r') as f:
 #            db.cursor().executescript(f.read())
 #        db.commit()
+
+@app.before_request
+def before_request():
+    g.user = current_user
 
 @app.errorhandler(404)
 def page_not_found(error):
@@ -23,14 +27,13 @@ def page_not_found(error):
     resp.headers['X-Something'] = 'A value'
     return resp
 
-
 @app.route('/')
 def show_entries():
     #cur = g.db.execute('select title, text from entries order by id desc')
     #entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
     entries = Entries.query.all()
-    return render_template('show_entries.html', entries=entries)
-
+    form = EntryForm()
+    return render_template('show_entries.html', entries=entries, form=form)
 
 @app.route('/add', methods=['POST'])
 def add_entry():
@@ -49,16 +52,13 @@ def login():
 
     if request.method == 'POST':
         form = LoginForm(request.form)
-        username = form.username.data
-        password = form.password.data
-        if username != app.config['USERNAME']:
-            error = 'Invalid username'
-        elif password != app.config['PASSWORD']:
-            error = 'Invalid password'
-        else:
+        if form.validate():
+            username = form.username.data
+            password = form.password.data
             #session['logged_in'] = True
             g.user = current_user
-            print dir(current_user)
+            user = User.query.filter_by(username=username).first()
+            login_user(user)
             flash('You were logged in')
             return redirect(url_for('show_entries'))
     else:
