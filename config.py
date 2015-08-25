@@ -7,6 +7,7 @@ class Config(object):
     
 class TestingConfig(Config):
     DATABASE = '/tmp/zhenmiao.db'
+    SQLALCHEMY_DATABAASE_URI = 'sqlite:///' + DATABASE
     USERNAME = 'admin'
     PASSWORD = '1234'
 
