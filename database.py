@@ -16,14 +16,14 @@ db_session = scoped_session(sessionmaker(autocommit=False,
 Base = declarative_base()
 Base.query = db_session.query_property()
 
-def connect_db():
-    return sqlite3.connect(app.config['DATABASE'])
-
 def init_db():
     # 在这里导入定义模型所需要的所有模块，这样它们就会正确的注册在
     # 元数据上。否则你就必须在调用 init_db() 之前导入它们。
     import models
     Base.metadata.create_all(bind=engine)
+
+def connect_db():
+    return sqlite3.connect(app.config['DATABASE'])
 
 @app.teardown_request
 def teardown_request(exception):
