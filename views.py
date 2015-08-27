@@ -6,7 +6,7 @@ from flask import render_template, abort, redirect, url_for, make_response, \
 from contextlib import closing
 from flask.ext.login import LoginManager, login_user, logout_user, login_required, current_user
 from forms import LoginForm, EntryForm
-from init import app
+from init import app, config_name
 from models import User, Entries
 
 #def init_db():
@@ -39,8 +39,12 @@ def show_entries():
 def add_entry():
     #if not g.user.is_authenticated():
     #    abort(401)
-    g.db.execute('insert into entries (title, text) values (?, ?)',
+    if config_name == 'testing':
+        g.db.execute('insert into entries (title, text) values (?, ?)',
                 [request.form['title'], request.form['text']])
+    else:
+        g.db.execute('insert into entries (title, text) values (%s, %s)',
+        [request.form['title'], request.form['text']])
     g.db.commit()
     flash('New entry was successfully posted')
     return redirect(url_for('show_entries'))
