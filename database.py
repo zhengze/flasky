@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from flask import g
-from main import config_name, app
+from init import config_name, app
 from config import config
 import sqlite3
 
@@ -38,5 +38,8 @@ def shutdown_session(exception=None):
 
 @app.before_request
 def before_request():
-    g.db = connect_db()
+    if config_name == 'testing':
+        g.db = connect_db()
+    else:
+        g.db = db_session
 
