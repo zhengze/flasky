@@ -13,6 +13,7 @@ class TestingConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    SQLALCHEMY_DATABAASE_URI = 'mysql://root:1234@localhost:3306/zhenmiao?charset=utf8'
 
 
 config = {
