@@ -7,7 +7,6 @@ from contextlib import closing
 from flask.ext.login import LoginManager, login_user, logout_user, login_required, current_user
 from forms import LoginForm, EntryForm
 from main import app
-from database import db_session
 from models import User, Entries
 
 #def init_db():
