@@ -3,3 +3,5 @@ SQLAlchemy
 Flask-Login
 SQLAlchemy-migrate
 flask-wtf
+flask-paginate
+flask-migrate
