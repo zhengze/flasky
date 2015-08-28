@@ -31,8 +31,9 @@ def show_entries():
     #cur = g.db.execute('select title, text from entries order by id desc')
     #entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
     entries = Entries.query.all()
+    entries_count = Entries.query.count()
     form = EntryForm()
-    return render_template('show_entries.html', entries=entries, form=form)
+    return render_template('show_entries.html', entries=entries, form=form, entries_count=entries_count)
 
 @app.route('/add', methods=['POST'])
 @login_required
@@ -60,7 +61,7 @@ def login():
             username = form.username.data
             password = form.password.data
             g.user = current_user
-            user = User.query.filter_by(username=username).first()
+            user = User.query.filter_by(username=username, password=password).first()
             login_user(user)
             flash('You were logged in')
             return redirect(url_for('show_entries'))
