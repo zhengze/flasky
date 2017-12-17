@@ -13,10 +13,18 @@ class TestingConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABAASE_URI = 'mysql://root:1234@localhost:3306/zhenmiao?charset=utf8'
+    DATABASE = '/tmp/zhenmiao.db'
+    SQLALCHEMY_DATABAASE_URI = 'sqlite:///' + DATABASE
+    USERNAME = 'admin'
+    PASSWORD = '1234'
 
+class ProductConfig(Config):
+    DEBUG = False
+    SQLALCHEMY_DATABAASE_URI = 'mysql+pymysql://root:1234@localhost:3306/zhenmiao?charset=utf8'
+    
 
 config = {
     'testing': TestingConfig,
     'development': DevelopmentConfig,
+    'production': ProductConfig,
 }
