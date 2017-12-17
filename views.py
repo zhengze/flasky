@@ -4,7 +4,7 @@ import sqlite3
 from flask import render_template, abort, redirect, url_for, make_response, \
     g, request, session, flash
 from contextlib import closing
-from flask.ext.login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from forms import LoginForm, EntryForm
 from init import app, config_name
 from models import User, Entries
