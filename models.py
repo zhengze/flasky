@@ -1,7 +1,7 @@
 from sqlalchemy import Table, Column, Integer, String, Text, Unicode, SmallInteger
 from sqlalchemy.orm import mapper
 from database import db_session, Base
-from flask.ext.login import LoginManager, UserMixin
+from flask_login import LoginManager, UserMixin
 from init import app
 
 ROLE_USER = 0
