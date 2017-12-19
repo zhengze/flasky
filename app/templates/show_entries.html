@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
-    {% if g.user.is_authenticated() %}
-    <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+    {% if g.user.is_authenticated %}
+    <form action="{{ url_for('main.add_entry') }}" method=post class=add-entry>
         <dl>
             <dt>{{ form.title.label }}:
             <dd>{{ form.title }}

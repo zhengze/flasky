@@ -1,14 +1,15 @@
+#!/usr/bin/env python
 #coding:utf8
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from flask import g
-from init import config_name, app
+from manage import config_name, app
 from config import config
 import sqlite3
 
-DB_CONNECT_STRING = config[config_name].SQLALCHEMY_DATABAASE_URI
+DB_CONNECT_STRING = config[config_name].SQLALCHEMY_DATABASE_URI
 engine = create_engine(DB_CONNECT_STRING, convert_unicode=True, echo=True)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,

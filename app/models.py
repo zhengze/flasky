@@ -1,14 +1,12 @@
 from sqlalchemy import Table, Column, Integer, String, Text, Unicode, SmallInteger
 from sqlalchemy.orm import mapper
 from database import db_session, Base
-from flask_login import LoginManager, UserMixin
-from init import app
+from flask_login import UserMixin
+from app import login_manager
 
 ROLE_USER = 0
 ROLE_ADMIN = 1
 
-login_manager = LoginManager()
-login_manager.setup_app(app)
 
 @login_manager.user_loader
 def load_user(userid):

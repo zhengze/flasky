@@ -4,11 +4,11 @@
 <div class=page>
     <h1>Zhenmiao</h1>
     <div class=metanav>
-    {% if g.user.is_authenticated() %}
+    {% if g.user.is_authenticated %}
         <span>{{g.user.username}}</span>
-        <a href="{{ url_for('logout') }}">log out</a>
+        <a href="{{ url_for('main.logout') }}">log out</a>
     {% else %}
-        <a href="{{ url_for('login') }}">log in</a>
+        <a href="{{ url_for('main.login') }}">log in</a>
     {% endif %}
     </div>
     {% for message in get_flashed_messages() %}
