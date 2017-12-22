@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import sqlite3
 from flask import render_template, abort, redirect, url_for, make_response, \
     g, request, session, flash
 from contextlib import closing
@@ -28,8 +27,6 @@ def page_not_found(error):
 
 @main.route('/')
 def show_entries():
-    #cur = g.db.execute('select title, text from entries order by id desc')
-    #entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
     entries = Entries.query.all()
     entries_count = Entries.query.count()
     form = EntryForm()
