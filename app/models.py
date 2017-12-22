@@ -1,8 +1,10 @@
-from sqlalchemy import Table, Column, Integer, String, Text, Unicode, SmallInteger
-from sqlalchemy.orm import mapper
-from database import db_session, Base
+#from sqlalchemy import Table, Column, Integer, String, Text, Unicode, SmallInteger
+#from sqlalchemy.orm import mapper
+#from database import db_session, Base
 from flask_login import UserMixin
 from app import login_manager
+from app.db import Table, Column, Integer, String, Text, Unicode, SmallInteger
+
 
 ROLE_USER = 0
 ROLE_ADMIN = 1
@@ -13,7 +15,7 @@ def load_user(userid):
     return User.query.get(userid)
 
 
-class User(Base, UserMixin):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     username = Column(String(50), unique=True, nullable=False)
@@ -29,7 +31,7 @@ class User(Base, UserMixin):
     def __repr__(self):
         return '<User %r>' % (self.username)
 
-class Entries(Base):
+class Entries(db.Model):
     __tablename__ = 'entries'
     id = Column(Integer, primary_key=True)
     title = Column(String(50)) 
