@@ -4,15 +4,10 @@ from flask import render_template, abort, redirect, url_for, make_response, \
     g, request, session, flash
 from contextlib import closing
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from .forms import LoginForm, EntryForm
+from .forms import EntryForm
 from . import main
 from ..models import User, Entries
 
-#def init_db():
-#    with closing(connect_db()) as db:
-#        with app.open_resource('schema.sql', mode='r') as f:
-#            db.cursor().executescript(f.read())
-#        db.commit()
 
 @main.before_request
 def before_request():
@@ -43,30 +38,4 @@ def add_entry():
     flash('New entry was successfully posted')
     return redirect(url_for('show_entries'))
 
-
-@main.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-
-    if request.method == 'POST':
-        form = LoginForm(request.form)
-        if form.validate():
-            username = form.username.data
-            password = form.password.data
-            g.user = current_user
-            user = User.query.filter_by(username=username, password=password).first()
-            login_user(user)
-            flash('You were logged in')
-            return redirect(url_for('show_entries'))
-    else:
-        form = LoginForm()
-        
-    return render_template('login.html', error=error, form=form)
-
-
-@main.route('/logout')
-def logout():
-    logout_user()
-    flash('You were logged out')
-    return redirect(url_for('show_entries'))
 
