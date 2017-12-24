@@ -10,7 +10,11 @@ from flask_migrate import Migrate, MigrateCommand
 config_name = os.getenv("FLASK_CONFIG") or "default"
 app = create_app(config_name)
 app.app_context().push()
+db.create_all()
 
+#DATABASE_URI = getattr(app.config, 'SQLALCHEMY_DATABASE_URI', '')
+#is_sqlite = DATABASE_URI.startswith('sqlite:')
+#migrate = Migrate(app, db,  render_as_batch=is_sqlite)
 migrate = Migrate(app, db)
 manager = Manager(app)
 
