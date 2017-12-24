@@ -10,10 +10,6 @@ from app import db
 from ..models import User, Entry
 
 
-@main.before_request
-def before_request():
-    g.user = current_user
-
 @main.errorhandler(404)
 def page_not_found(error):
     #return render_template('page_not_found.html'), 404
@@ -33,10 +29,9 @@ def show_entries():
 def add_entry():
     entryform = EntryForm(request.form)
     entry = Entry(entryform.title.data, entry.text.data)
-    print(entry.title)
     db.session.add(entry)
     db.session.commit()
-    flash('New entry was successfully posted')
+    #flash('New entry was successfully posted')
     return redirect(url_for('main.show_entries'))
 
 
