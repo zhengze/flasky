@@ -6,7 +6,8 @@ from contextlib import closing
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from .forms import EntryForm
 from . import main
-from ..models import User, Entries
+from app import db
+from ..models import User, Entry
 
 
 @main.before_request
@@ -20,22 +21,22 @@ def page_not_found(error):
     resp.headers['X-Something'] = 'A value'
     return resp
 
-@main.route('/')
+@main.route('/', methods=['GET'])
 def show_entries():
-    entries = Entries.query.all()
-    entries_count = Entries.query.count()
+    entries = Entry.query.all()
+    entries_count = Entry.query.count()
     form = EntryForm()
     return render_template('show_entries.html', entries=entries, form=form, entries_count=entries_count)
 
 @main.route('/add', methods=['POST'])
 @login_required
 def add_entry():
-    #if not g.user.is_authenticated():
-    #    abort(401)
-    g.db.execute('insert into entries (title, text) values (?, ?)',
-            [request.form['title'], request.form['text']])
-    g.db.commit()
+    entryform = EntryForm(request.form)
+    entry = Entry(entryform.title.data, entry.text.data)
+    print(entry.title)
+    db.session.add(entry)
+    db.session.commit()
     flash('New entry was successfully posted')
-    return redirect(url_for('show_entries'))
+    return redirect(url_for('main.show_entries'))
 
 

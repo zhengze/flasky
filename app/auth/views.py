@@ -1,5 +1,5 @@
 from flask import render_template, redirect, request, url_for, flash
-from flask_login import login_user
+from flask_login import login_user, logout_user
 from . import auth
 from ..models import User
 from .forms import LoginForm
@@ -18,9 +18,9 @@ def login():
         form = LoginForm(request.form)
         if form.validate():
             user = User.query.filter_by(email=form.email.data).first()
-            if user is not None and user.verify_password(form.password.data):
+            if user is not None or user.verify_password(form.password.data):
                 login_user(user)
-                return redirect(request.args.get('next') or url_for('main.index'))
+                return redirect(url_for('main.show_entries'))
             flash('You were logged in')
     else:
         form = LoginForm()
@@ -32,5 +32,5 @@ def login():
 def logout():
     logout_user()
     flash('You were logged out')
-    return redirect(url_for('main.index'))
+    return redirect(url_for('main.show_entries'))
 
