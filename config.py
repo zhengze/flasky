@@ -7,20 +7,20 @@ class Config(object):
     CSRF_ENABLED = True
     
 class TestingConfig(Config):
-    DATABASE = './zhenmiao.db'
+    DATABASE = './blog.db'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + DATABASE
     USERNAME = 'admin'
     PASSWORD = '1234'
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    DATABASE = './zhenmiao.db'
+    DATABASE = './blog.db'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + DATABASE
     USERNAME = 'admin'
     PASSWORD = '1234'
 
 class ProductConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:1234@localhost:3306/zhenmiao?charset=utf8'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:1234@localhost:3306/blog?charset=utf8'
     
 
 config = {
