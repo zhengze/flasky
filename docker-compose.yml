@@ -1,0 +1,39 @@
+version: "2"
+
+services:
+    db:
+      restart: always
+      image: mysql:5.6
+      expose:
+        - "3306"
+      volumes:
+        - ./db:/var/lib/mysql
+        - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
+      environment:
+        - MYSQL_DATABASE=root
+        - MYSQL_ROOT_PASSWORD=1234
+
+    web:
+      restart: always
+      build: .
+      #command: uwsgi --http 0.0.0.0:5000 -w blog.wsgi -M -p 3 --vhost --buffer-size 32768
+      command: python manage.py runserver 
+      volumes:
+        - .:/code
+      ports:
+        - "5000:5000"
+      links:
+        - db
+    
+    nginx_proxy:
+        restart: always
+        image: nginx
+        ports:
+            - "8090:8090"
+        volumes:
+            - ./conf/nginx/blog.conf:/etc/nginx/conf.d/blog.conf
+        volumes_from:
+            - web
+        links:
+            - web:web
+
