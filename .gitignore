@@ -58,3 +58,5 @@ target/
 
 schema.sql
 .py[cod]
+
+migrations
