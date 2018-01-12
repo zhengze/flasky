@@ -1,4 +1,6 @@
-# configuration
+import os
+
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
     DEBUG = False
@@ -7,14 +9,14 @@ class Config(object):
     CSRF_ENABLED = True
     
 class TestingConfig(Config):
-    DATABASE = './blog.db'
+    DATABASE = os.path.join(basedir, 'test.db')
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + DATABASE
     USERNAME = 'admin'
     PASSWORD = '1234'
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    DATABASE = './blog.db'
+    DATABASE = os.path.join(basedir, 'dev.db')
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + DATABASE
     USERNAME = 'admin'
     PASSWORD = '1234'
