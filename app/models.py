@@ -12,7 +12,7 @@ class Role(db.Model):
     __tablename__ = 'role'
     id = db.Column(db.Integer, primary_key=True)
     rolename = db.Column(db.String(50), unique=True, nullable=False)
-    users = db.relationship('User', backref=db.backref('role'))
+    users = db.relationship('User', backref=db.backref('role'), lazy='dynamic')
 
     def __init__(self, rolename):
         self.rolename = rolename
