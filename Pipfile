@@ -1,0 +1,43 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[dev-packages]
+
+forgerypy = "*"
+httpie = "*"
+
+
+[packages]
+
+alembic = "==0.9.6"
+click = "==6.7"
+decorator = "==4.1.2"
+flask = "==0.12.2"
+flask-login = "==0.4.1"
+flask-migrate = "==2.1.1"
+flask-paginate = "==0.5.1"
+flask-script = "==2.0.6"
+flask-sqlalchemy = "==2.3.2"
+flask-wtf = "==0.14.2"
+itsdangerous = "==0.24"
+"jinja2" = "==2.10"
+mako = "==1.0.7"
+markupsafe = "==1.0"
+pbr = "==3.1.1"
+pymysql = "==0.7.11"
+python-dateutil = "==2.6.1"
+python-editor = "==1.0.3"
+sqlalchemy = "==1.1.15"
+sqlalchemy-migrate = "==0.11.0"
+sqlparse = "==0.2.4"
+tempita = "==0.5.2"
+werkzeug = "==0.13"
+wtforms = "==2.1"
+flask-bootstrap = "*"
+flask-moment = "*"
+flask-mail = "*"
+flask-httpauth = "*"
