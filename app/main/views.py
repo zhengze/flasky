@@ -7,7 +7,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from .forms import EntryForm
 from . import main
 from app import db
-from ..models import User, Entry
+from ..models import User, Post
 
 
 @main.errorhandler(404)
@@ -19,8 +19,8 @@ def page_not_found(error):
 
 @main.route('/', methods=['GET'])
 def show_entries():
-    entries = Entry.query.all()
-    entries_count = Entry.query.count()
+    entries = Post.query.all()
+    entries_count = Post.query.count()
     form = EntryForm()
     return render_template('show_entries.html', entries=entries, form=form, entries_count=entries_count)
 

@@ -3,4 +3,4 @@ from flask import Blueprint
 main = Blueprint('main', __name__)
 
 from . import views
-from ..models import User, Entry
+from ..models import User, Post
